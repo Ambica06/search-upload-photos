@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Install Python dependencies specified in requirements.txt (located inside the 'lambdas' folder)
+      - echo Installing dependencies...
+      - pip install -r lambdas/requirements.txt -t lambdas/package
+  build:
+    commands:
+      # Create a deployment package (zip file) for Lambda functions
+      - echo Packaging Lambda functions...
+      - cd lambdas/package
+      - zip -r ../lambda-function.zip .
+      - cd ..
+      - zip -g lambda-function.zip lambdas/index-photos.py lambdas/search-photos.py  # Add Lambda function code to the zip file
+
+artifacts:
+  files:
+    - lambdas/lambda-function.zip
