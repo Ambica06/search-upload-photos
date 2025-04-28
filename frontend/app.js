@@ -27,7 +27,7 @@ async function searchPhotos() {
 
     response.data.results.forEach(url => {
       const img = document.createElement('img');
-      img.src = url.objectKey;
+      img.src = url.url;
       photosGrid.appendChild(img);
     });
   } catch (error) {
