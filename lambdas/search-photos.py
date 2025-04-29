@@ -53,7 +53,8 @@ def lambda_handler(event, context):
     search_results = []
 
     for hit in res_json.get('hits', {}).get('hits', []):
-        print(hit)
+        object_key = hit['_source']['objectKey']
+        hit['_source']['url'] = f"https://photos-ab12624.s3.amazonaws.com/{object_key}"
         search_results.append(hit['_source'])
 
     return {

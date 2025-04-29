@@ -25,7 +25,9 @@ async function searchPhotos() {
     const photosGrid = document.getElementById('photosGrid');
     photosGrid.innerHTML = '';
 
-    response.data.results.forEach(url => {
+    const resp = JSON.parse(response.data.body);
+
+    resp.results.forEach(url => {
       const img = document.createElement('img');
       img.src = url.url;
       photosGrid.appendChild(img);
