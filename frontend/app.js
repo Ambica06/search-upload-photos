@@ -51,6 +51,7 @@ async function uploadPhoto() {
 
   const params = {
     object: file.name,
+    "Content-Type": file.type,
     "x-amz-meta-customLabels": customLabels
   };
 

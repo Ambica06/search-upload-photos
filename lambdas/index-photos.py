@@ -74,9 +74,9 @@ def lambda_handler(event, context):
         print(url)
         response = requests.post(
                     url,
-                    auth=HTTPBasicAuth(username, password),  # Basic Authentication
+                    auth=HTTPBasicAuth(username, password), 
                     headers=headers,
-                    data=json.dumps(doc)  # Convert doc to JSON string
+                    data=json.dumps(doc)
                 )
         print("OpenSearch response:", response.status_code, response.text)
     except Exception as e:
