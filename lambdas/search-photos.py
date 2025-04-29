@@ -23,7 +23,7 @@ awsauth = AWS4Auth(
 
 def lambda_handler(event, context):
     # Handle preflight OPTIONS request
-    if event['httpMethod'] == 'OPTIONS':
+    if event.get('httpMethod') == 'OPTIONS':
         return {
             'statusCode': 200,
             'headers': {
