@@ -10,13 +10,13 @@ phases:
       # Build index-photos zip
       - echo Packaging index-photos Lambda...
       - mkdir -p lambdas/build/index-photos
-      - cp lambdas/INDEX-PHOTOS/index-photos.py lambdas/build/index-photos/index-photos.py
+      - cp lambdas/index-photos.py lambdas/build/index-photos/index-photos.py
       - cd lambdas/build/index-photos && zip -r ../../../index-photos.zip . && cd -
 
       # Build search-photos zip
       - echo Packaging search-photos Lambda...
       - mkdir -p lambdas/build/search-photos
-      - cp lambdas/INDEX-PHOTOS/search-photos.py lambdas/build/search-photos/search-photos.py
+      - cp lambdas/search-photos.py lambdas/build/search-photos/search-photos.py
       - cd lambdas/build/search-photos && zip -r ../../../search-photos.zip . && cd -
 
   post_build:
