@@ -1,0 +1,36 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies if needed...
+      - apt-get update && apt-get install -y zip git
+  pre_build:
+    commands:
+      - echo Checking for changes in frontend/...
+      - git fetch origin $CODEBUILD_SOURCE_VERSION --depth=2 || true
+      - git diff-tree --no-commit-id --name-only -r $CODEBUILD_RESOLVED_SOURCE_VERSION > changed_files.txt || true
+      - cat changed_files.txt || true
+      - |
+        if ! grep -q '^frontend/' changed_files.txt; then
+          echo "No changes in frontend/. Skipping build."
+          # Exit gracefully, CodePipeline will treat empty artifacts as no deployment needed
+          touch NO_CHANGES
+        else
+          echo "Changes detected in frontend/. Proceeding with build."
+        fi
+  build:
+    commands:
+      - |
+        if [ -f NO_CHANGES ]; then
+          echo "Skipping zip step since no changes."
+          exit 0
+        fi
+      - echo Zipping frontend files...
+      - cd frontend
+      - zip -r ../frontend.zip .
+      - cd ..
+artifacts:
+  files:
+    - frontend.zip    # Only the zip will be uploaded as output artifact
+  discard-paths: no
