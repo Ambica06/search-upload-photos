@@ -9,7 +9,6 @@ const apigClient = apigClientFactory.newClient({
   defaultAcceptType: 'application/json'
 });
 
-
 // SEARCH Photos
 async function searchPhotos() {
   const query = document.getElementById('searchQuery').value;
