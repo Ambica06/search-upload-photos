@@ -14,7 +14,10 @@ phases:
       - zip -r ../lambda-function.zip .
       - cd ..
       - zip -g lambda-function.zip index-photos.py search-photos.py  # Add Lambda function code to the zip file
-
+  post_build:
+    commands:
+      - cd ..
+      - bash buildspec_update_lambda_code.sh
 artifacts:
   files:
     - lambdas/lambda-function.zip
