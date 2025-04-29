@@ -1,19 +1,19 @@
 #!/bin/bash
 
-set -e  # Exit immediately if a command fails
+set -e
 
-echo "Lambda files changed. Updating Lambda functions..."
+echo "Updating both Lambda functions..."
 
-# Update first Lambda (index-photos)
-echo "Updating Lambda function: index-photos..."
+# Update index-photos
+echo "Updating index-photos Lambda..."
 aws lambda update-function-code \
   --function-name index-photos \
-  --zip-file fileb://lambdas/lambda-function.zip
+  --zip-file fileb://index-photos.zip
 
-# Update second Lambda (search-photos)
-echo "Updating Lambda function: search-photos..."
+# Update search-photos
+echo "Updating search-photos Lambda..."
 aws lambda update-function-code \
   --function-name search-photos \
-  --zip-file fileb://lambdas/lambda-function.zip
+  --zip-file fileb://search-photos.zip
 
-echo "Both Lambda functions updated successfully."
+echo "Both Lambda functions updated successfully!"

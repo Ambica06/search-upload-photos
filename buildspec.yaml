@@ -3,21 +3,30 @@ version: 0.2
 phases:
   install:
     commands:
-      # Install Python dependencies specified in requirements.txt (located inside the 'lambdas' folder)
       - echo Installing dependencies...
-      - pip install -r lambdas/requirements.txt -t lambdas/package
+      - pip install -r requirements.txt -t package
+
   build:
     commands:
-      # Create a deployment package (zip file) for Lambda functions
-      - echo Packaging Lambda functions...
-      - cd lambdas/package
-      - zip -r ../lambda-function.zip .
-      - cd ..
-      - zip -g lambda-function.zip index-photos.py search-photos.py  # Add Lambda function code to the zip file
+      # Build index-photos zip
+      - echo Packaging index-photos Lambda...
+      - mkdir -p build/index-photos
+      - cp -r package/* build/index-photos/
+      - cp INDEX-PHOTOS/index-photos.py build/index-photos/lambda_function.py
+      - cd build/index-photos && zip -r ../../index-photos.zip . && cd -
+
+      # Build search-photos zip
+      - echo Packaging search-photos Lambda...
+      - mkdir -p build/search-photos
+      - cp -r package/* build/search-photos/
+      - cp INDEX-PHOTOS/search-photos.py build/search-photos/lambda_function.py
+      - cd build/search-photos && zip -r ../../search-photos.zip . && cd -
+
   post_build:
     commands:
-      - cd ..
       - bash buildspec_update_lambda_code.sh
+
 artifacts:
   files:
-    - lambdas/lambda-function.zip
+    - index-photos.zip
+    - search-photos.zip
